@@ -2,7 +2,7 @@ import os
 from typing import Any, List
 from langchain_core.tools import BaseTool
 from langchain_openai import ChatOpenAI
-from src.tools import consultar_metricas, consultar_politicas
+from tools import consultar_metricas, consultar_politicas
 
 TOOLS: List[BaseTool] = [consultar_metricas, consultar_politicas]
 

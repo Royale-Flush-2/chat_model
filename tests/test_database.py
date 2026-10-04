@@ -1,7 +1,7 @@
 from unittest.mock import AsyncMock, patch
 import pytest
-import src.database as database_module
-from src.database import close_db_pool, get_db_pool
+import database as database_module
+from database import close_db_pool, get_db_pool
 
 
 @pytest.mark.asyncio

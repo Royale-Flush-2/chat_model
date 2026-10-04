@@ -1,7 +1,7 @@
 from unittest.mock import MagicMock
 import pytest
-from src.tools import consultar_metricas, consultar_politicas
-from src.llm import get_chat_response, get_llm, TOOLS
+from tools import consultar_metricas, consultar_politicas
+from llm import get_chat_response, get_llm, TOOLS
 
 
 def test_tool_definition():
@@ -45,6 +45,6 @@ def test_get_chat_response_with_api_key(monkeypatch):
     mock_llm = MagicMock()
     mock_llm.invoke.return_value = MagicMock(content="Respuesta del modelo")
 
-    monkeypatch.setattr("src.llm.get_llm", lambda api_key=None: mock_llm)
+    monkeypatch.setattr("llm.get_llm", lambda api_key=None: mock_llm)
     response = get_chat_response("¿Pregunta?")
     assert response == "Respuesta del modelo"

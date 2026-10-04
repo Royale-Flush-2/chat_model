@@ -1,7 +1,7 @@
 import asyncio
 from fastapi import FastAPI
 from fastapi.responses import StreamingResponse
-from src.schemas import ChatRequest, DecisionRequest
+from schemas import ChatRequest, DecisionRequest
 
 app = FastAPI(title="Centinela Chat Model")
 
