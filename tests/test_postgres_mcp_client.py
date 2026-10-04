@@ -34,9 +34,22 @@ async def test_postgres_mcp_client_close():
     provider = PostgresMCPToolProvider()
     await provider.initialize()
     
-    mock_close = AsyncMock()
-    provider.client.close = mock_close
+    # Should not crash even though MultiServerMCPClient has no close method
     await provider.close()
     
-    mock_close.assert_awaited_once()
+    assert provider.client is None
+
+@pytest.mark.asyncio
+async def test_postgres_mcp_client_close_with_mock():
+    provider = PostgresMCPToolProvider()
+    await provider.initialize()
+    
+    # Inject a mock client with a close method to verify it would be called
+    mock_client = MagicMock()
+    mock_client.close = AsyncMock()
+    provider.client = mock_client
+    
+    await provider.close()
+    
+    mock_client.close.assert_awaited_once()
     assert provider.client is None

@@ -1,5 +1,4 @@
 from langchain_mcp_adapters.client import MultiServerMCPClient
-import asyncio
 
 class PostgresMCPToolProvider:
     def __init__(self, mcp_server_url: str = "http://localhost:8000/sse"):
@@ -29,5 +28,12 @@ class PostgresMCPToolProvider:
     async def close(self):
         """Close the connection to the MCP server."""
         if self.client is not None:
-            await self.client.close()
+            if hasattr(self.client, "close") and callable(getattr(self.client, "close")):
+                # Check if it returns a coroutine before awaiting it
+                import inspect
+                close_method = getattr(self.client, "close")
+                if inspect.iscoroutinefunction(close_method):
+                    await close_method()
+                else:
+                    close_method()
             self.client = None
