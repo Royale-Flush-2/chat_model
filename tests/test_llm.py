@@ -35,13 +35,13 @@ def test_get_llm_tool_binding():
 
 
 def test_get_chat_response_simulated(monkeypatch):
-    monkeypatch.delenv("OPENAI_API_KEY", raising=False)
+    monkeypatch.delenv("DEEPSEEK_API_KEY", raising=False)
     response = get_chat_response("¿Cuál es el margen?")
     assert "Respuesta simulada para: ¿Cuál es el margen?" in response
 
 
 def test_get_chat_response_with_api_key(monkeypatch):
-    monkeypatch.setenv("OPENAI_API_KEY", "real-key-for-test")
+    monkeypatch.setenv("DEEPSEEK_API_KEY", "real-key-for-test")
     mock_llm = MagicMock()
     mock_llm.invoke.return_value = MagicMock(content="Respuesta del modelo")
 

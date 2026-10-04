@@ -58,7 +58,7 @@ resource "aws_apprunner_service" "app" {
         runtime_environment_variables = {
           PORT             = "8000"
           DATABASE_URL     = var.database_url
-          OPENAI_API_KEY   = var.openai_api_key
+          DEEPSEEK_API_KEY = var.deepseek_api_key
         }
       }
     }

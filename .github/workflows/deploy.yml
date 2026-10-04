@@ -41,7 +41,7 @@ jobs:
         working-directory: ./terraform
         env:
           TF_VAR_database_url: ${{ secrets.DATABASE_URL }}
-          TF_VAR_openai_api_key: ${{ secrets.OPENAI_API_KEY }}
+          TF_VAR_deepseek_api_key: ${{ secrets.DEEPSEEK_API_KEY }}
         run: terraform apply -target=aws_ecr_repository.repo -auto-approve
 
       - name: Build and Push Docker Image
@@ -55,5 +55,5 @@ jobs:
         working-directory: ./terraform
         env:
           TF_VAR_database_url: ${{ secrets.DATABASE_URL }}
-          TF_VAR_openai_api_key: ${{ secrets.OPENAI_API_KEY }}
+          TF_VAR_deepseek_api_key: ${{ secrets.DEEPSEEK_API_KEY }}
         run: terraform apply -auto-approve

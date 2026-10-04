@@ -17,8 +17,8 @@ variable "database_url" {
   default     = ""
 }
 
-variable "openai_api_key" {
-  description = "API Key for OpenAI LLM"
+variable "deepseek_api_key" {
+  description = "API Key for DeepSeek LLM"
   type        = string
   sensitive   = true
   default     = ""

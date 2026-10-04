@@ -39,7 +39,7 @@ uv add fastapi uvicorn httpx pytest pytest-asyncio
 # tests/test_main.py
 import pytest
 from httpx import AsyncClient, ASGITransport
-from src.main import app
+from main import app
 
 @pytest.mark.asyncio
 async def test_health_check():
@@ -51,7 +51,7 @@ async def test_health_check():
 
 - [ ] **Step 3: Run test to verify it fails**
 Run: `uv run pytest tests/test_main.py -v`
-Expected: FAIL (ModuleNotFoundError: No module named 'src.main')
+Expected: FAIL (ModuleNotFoundError: No module named 'main')
 
 - [ ] **Step 4: Write minimal implementation**
 ```python
@@ -95,7 +95,7 @@ uv add asyncpg
 ```python
 # tests/test_database.py
 import pytest
-from src.database import get_db_pool
+from database import get_db_pool
 
 @pytest.mark.asyncio
 async def test_db_pool_creation(monkeypatch):
@@ -149,7 +149,7 @@ git commit -m "feat: add database pool setup"
 - Create: `tests/test_decision.py`
 
 **Interfaces:**
-- Consumes: `get_db_pool` from `src.database`
+- Consumes: `get_db_pool` from `database`
 - Produces: `POST /alertas/{id}/decision` endpoint.
 
 - [ ] **Step 1: Add dependencies**
@@ -173,7 +173,7 @@ class DecisionRequest(BaseModel):
 # tests/test_decision.py
 import pytest
 from httpx import AsyncClient, ASGITransport
-from src.main import app
+from main import app
 
 @pytest.mark.asyncio
 async def test_post_decision():
@@ -191,7 +191,7 @@ Expected: FAIL (404 Not Found)
 - [ ] **Step 5: Write minimal implementation**
 ```python
 # In src/main.py, append:
-from src.schemas import DecisionRequest
+from schemas import DecisionRequest
 
 @app.post("/alertas/{alerta_id}/decision")
 async def process_decision(alerta_id: int, request: DecisionRequest):
@@ -246,7 +246,7 @@ def consultar_politicas(query: str) -> str:
 ```python
 # tests/test_llm.py
 import pytest
-from src.tools import consultar_metricas
+from tools import consultar_metricas
 
 def test_tool_definition():
     assert consultar_metricas.name == "consultar_metricas"
@@ -288,7 +288,7 @@ class ChatRequest(BaseModel):
 # tests/test_chat.py
 import pytest
 from httpx import AsyncClient, ASGITransport
-from src.main import app
+from main import app
 
 @pytest.mark.asyncio
 async def test_chat_endpoint():
@@ -303,7 +303,7 @@ async def test_chat_endpoint():
 ```python
 # In src/main.py, append:
 from fastapi.responses import StreamingResponse
-from src.schemas import ChatRequest
+from schemas import ChatRequest
 import asyncio
 
 async def mock_stream():
