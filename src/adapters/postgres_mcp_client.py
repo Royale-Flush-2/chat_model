@@ -22,5 +22,12 @@ class PostgresMCPToolProvider:
         if self.client is None:
             raise RuntimeError("Client not initialized. Call initialize() first.")
         
-        # We wrap in try/except or just let it bubble up if connection fails
-        return await self.client.get_tools()
+        # Mocking connection for now until actual mcp tools are loaded
+        # return await self.client.get_tools()
+        return []
+
+    async def close(self):
+        """Close the connection to the MCP server."""
+        if self.client is not None:
+            await self.client.close()
+            self.client = None

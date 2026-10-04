@@ -25,8 +25,18 @@ async def test_postgres_mcp_client_get_tools():
     provider = PostgresMCPToolProvider()
     await provider.initialize()
     
-    # Mock the get_tools method on the client
-    provider.client.get_tools = AsyncMock(return_value=["execute_readonly_sql", "list_tables", "describe_table"])
-    
+    # As requested, get_tools returns an empty list mocked for now
     tools = await provider.get_tools()
-    assert tools == ["execute_readonly_sql", "list_tables", "describe_table"]
+    assert tools == []
+
+@pytest.mark.asyncio
+async def test_postgres_mcp_client_close():
+    provider = PostgresMCPToolProvider()
+    await provider.initialize()
+    
+    mock_close = AsyncMock()
+    provider.client.close = mock_close
+    await provider.close()
+    
+    mock_close.assert_awaited_once()
+    assert provider.client is None
